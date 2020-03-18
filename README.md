@@ -23,12 +23,3 @@ Users should login via (Facebook Login for the Web)[https://developers.facebook.
 
 ## Deployment 
 Heroku 
-
-
-
-
-Please begin work with each other to identify ideas, research APIs, and create project designs.
-You should expect to submit initial project idea proposals by the end of class today.
-
-Feel free to begin coding as well, we have a lot of time.  I expect workflows, psuedocode, charts, or however else you can share your idea.  I just need something to look at to make sure that you are on the right track!
-Please share also who will be focusing on what (Front-End, Back-End, Architecture, Planning, etc).  Your roles can be creative - you can jump around too but try to split up tasks!
