@@ -10,7 +10,7 @@ Bootstrap based front end
 
 ### Search
 Map API? 
-- Google $$$ (https://github.com/googlemaps/google-maps-services-js)
+- Google $$$ [Node](https://github.com/googlemaps/google-maps-services-js)
 - Mapnik no $
 
 ### Add Rentals
@@ -19,7 +19,7 @@ Form to allow user to add a rental to their profile
 ### Users
 Need to have a user profile page that shows past rentals, as well as any gear available for rental.
 
-Users should login via (Facebook Login for the Web)[https://developers.facebook.com/docs/facebook-login/web]
+Users should login via [Facebook Login for the Web](https://developers.facebook.com/docs/facebook-login/web)
 
 ## Deployment 
 Heroku 
