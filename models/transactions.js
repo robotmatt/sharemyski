@@ -1,6 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
     var Transactions = sequelize.define("Transactions", {
-        tran_id: DataTypes.INTEGER,
         tran_owner: DataTypes.INTEGER,
         tran_renter: DataTypes.INTEGER,
         gear_id: DataTypes.INTEGER,

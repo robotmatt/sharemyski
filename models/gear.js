@@ -1,6 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
     var Gear = sequelize.define("Gear", {
-        gear_id: DataTypes.INTEGER,
         user_id: DataTypes.INTEGER,
         loc_id: DataTypes.INTEGER,
         cat_id: DataTypes.INTEGER,
