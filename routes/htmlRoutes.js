@@ -10,6 +10,15 @@ module.exports = function (app) {
       });
     });
   });
+  // Load search page
+  app.post("/search", function (req, res) {
+    console.log(JSON.parse(JSON.stringify(req.body))); 
+      res.render("search", {
+        lat: req.body.lat,
+        lng: req.body.lng
+
+    });
+  });
 
   app.get("/allrentals", function (req, res) {
     // if users is admin
