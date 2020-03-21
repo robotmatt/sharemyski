@@ -1,40 +1,39 @@
-
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Find your favorite snow gear!</h1>
   <p class="lead">Copy Text</p>
-</div> 
+</div>
 
 <div class="container mx-auto text-center">
-    <form class="needs-validation" novalidate="">
-        <div class="row">
-          <div class="col-md mb-3">
-            <label for="location">Location</label>
-            <input type="search" class="form-control" id="location" placeholder="" value="" required="">
-            <div class="invalid-feedback">
-              Valid Location is required.
-            </div>
-          </div>
-          <div class="col-md mb-3">
-            <label for="startDate">Start</label>
-            <input type="date" class="form-control date" id="startDate" placeholder="" value="" required="">
-            <div class="invalid-feedback">
-              Valid start date is required.
-            </div>
-          </div>
-          <div class="col-md mb-3">
-            <label for="endDate">End</label>
-            <input type="date" class="form-control date" id="endDate" placeholder="" value="" required="">
-            <div class="invalid-feedback">
-              Valid end date is required.
-            </div>
-          </div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Search for gear!</button>
+  <form id="searchForm" class="needs-validation" novalidate="" action="search" method="POST">
+    <div class="row">
+      <div class="col-md mb-3">
+        <label for="location">Location</label>
+        <input type="search" class="form-control" id="location" placeholder="" value="" required="">
+        <div class="invalid-feedback">
+          Valid Location is required.
         </div>
-      </form>
+      </div>
+      <div class="col-md mb-3">
+        <label for="startDate">Start</label>
+        <input type="date" class="form-control date" id="startDate" placeholder="" value="" required="">
+        <div class="invalid-feedback">
+          Valid start date is required.
+        </div>
+      </div>
+      <div class="col-md mb-3">
+        <label for="endDate">End</label>
+        <input type="date" class="form-control date" id="endDate" placeholder="" value="" required="">
+        <div class="invalid-feedback">
+          Valid end date is required.
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit" id="button-search">Search for gear!</button>
+    </div>
+  </form>
 
 </div>
 
-<script src="/js/index.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.18.1"></script>
 
 <script>
@@ -43,4 +42,41 @@
     apiKey: 'db98c654e58bf17cea0e8dec0146590b',
     container: document.querySelector('#location')
   });
+  var currentPlace;
+  placesAutocomplete.on('change', e => currentPlace = e.suggestion);
+
+ $('#searchForm').submit(function () {
+    var data = {
+      latlng: currentPlace.latlng,
+      startDate: $("#startDate").val().trim(),
+      endDate: $("#endDate").val().trim()
+    };
+
+    $('<input>').attr('type', 'hidden').attr('name', 'lat').attr('value', data.latlng.lat).appendTo('#searchForm');
+    $('<input>').attr('type', 'hidden').attr('name', 'lng').attr('value', data.latlng.lng).appendTo('#searchForm');
+    $('<input>').attr('type', 'hidden').attr('name', 'start').attr('value', data.startDate).appendTo('#searchForm');
+    $('<input>').attr('type', 'hidden').attr('name', 'end').attr('value', data.endDate).appendTo('#searchForm');
+    return true;
+  });
+/*
+  $("#button-search").on("click", function (event) {
+    event.preventDefault();
+    placesAutocomplete.getVal(e => console.log(e.suggestion));
+    var data = {
+      suggestion: currentPlace.latlng,
+      startDate: $("#startDate").val().trim(),
+      endDate: $("#endDate").val().trim()
+    };
+    console.log(data);
+    $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "search",
+      data: JSON.stringify(data)
+    });
+  });
+  */
+
 </script>
