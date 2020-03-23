@@ -31,8 +31,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        email: DataTypes.STRING,
-        phone: DataTypes.STRING,
+        email: {
+            type: DataTypes.STRING,
+        },
+        phone: {
+            type: DataTypes.STRING,
+        },
         renter_rating_avg: {
             type: DataTypes.FLOAT(7, 2),
             defaultValue: 0,
