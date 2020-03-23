@@ -1,18 +1,54 @@
 // TRANSACTIONS  TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Transactions = sequelize.define("Transactions", {
-        owner_id: DataTypes.INTEGER,
-        renter_id: DataTypes.INTEGER,
-        stuff_id: DataTypes.INTEGER,
-        loc_id: DataTypes.INTEGER,
-        start: DataTypes.INTEGER,
-        stop: DataTypes.INTEGER,
-        days: DataTypes.INTEGER,
-        insurance: DataTypes.FLOAT(7, 2),
-        daily_rate: DataTypes.FLOAT(7, 2),
-        total: DataTypes.FLOAT(7, 2),
-        renter_rating: DataTypes.FLOAT(7, 2),
-        owner_rating: DataTypes.FLOAT(7, 2),
+        owner_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        renter_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        stuff_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        loc_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        start: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        stop: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        days: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        insurance: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        daily_rate: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        total: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        renter_rating: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        owner_rating: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        }
     });
     Transactions.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {

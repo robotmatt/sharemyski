@@ -1,15 +1,45 @@
 // STUFF TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Stuff = sequelize.define("Stuff", {
-        user_id: DataTypes.INTEGER,
-        loc_id: DataTypes.INTEGER,
-        cat_id: DataTypes.INTEGER,
-        cat_name: DataTypes.STRING,
-        description: DataTypes.STRING,
-        gender: DataTypes.STRING,
-        rate: DataTypes.FLOAT(7, 2),
-        rating_avg: DataTypes.FLOAT(7, 2),
-        image: DataTypes.STRING,
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        loc_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        cat_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        cat_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        gender: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1],
+                notEmpty: true
+            }
+        },
+        rate: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        rating_avg: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        image: {
+            type: DataTypes.STRING,
+        }
     });
     Stuff.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {

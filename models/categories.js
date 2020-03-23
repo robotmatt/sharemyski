@@ -1,7 +1,13 @@
 // CATEGORIES TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Categories = sequelize.define("Categories", {
-        description: DataTypes.STRING
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        }
     });
     Categories.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {

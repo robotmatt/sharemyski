@@ -1,14 +1,35 @@
 // LOCATIONS TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Locations = sequelize.define("Locations", {
-        address1: DataTypes.STRING,
-        address2: DataTypes.STRING,
-        city: DataTypes.STRING,
-        state: DataTypes.STRING,
-        code: DataTypes.STRING,
-        country: DataTypes.STRING,
-        long: DataTypes.FLOAT,
-        lat: DataTypes.FLOAT,
+        address1: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        address2: {
+            type: DataTypes.STRING,
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        code: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        country: {
+            type: DataTypes.STRING,
+            defaultValue: "USA",
+        },
+        long: {
+            type: DataTypes.DOUBLE,
+        },
+        lat: {
+            type: DataTypes.DOUBLE,
+        }
     });
     Locations.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
