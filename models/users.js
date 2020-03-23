@@ -1,21 +1,66 @@
 // USERS TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Users = sequelize.define("Users", {
-        name: DataTypes.STRING,
-        fb_id: DataTypes.STRING,
-        admin: DataTypes.BOOLEAN,
-        active: DataTypes.BOOLEAN,
-        rents: DataTypes.BOOLEAN,
-        owns: DataTypes.BOOLEAN,
-        loc_id: DataTypes.INTEGER,
-        email: DataTypes.STRING,
-        phone: DataTypes.STRING,
-        renter_rating_avg: DataTypes.FLOAT(7, 2),
-        owner_rating_avg: DataTypes.FLOAT(7, 2),
-        renter_transactions: DataTypes.INTEGER,
-        owner_transactions: DataTypes.INTEGER,
-        renter_total_value: DataTypes.FLOAT(7, 2),
-        owner_total_value: DataTypes.FLOAT(7, 2),
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        fb_id: {
+            type: DataTypes.STRING,
+        },
+        admin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        rents: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        owns: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        loc_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING,
+        },
+        phone: {
+            type: DataTypes.STRING,
+        },
+        renter_rating_avg: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        owner_rating_avg: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        renter_transactions: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        owner_transactions: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        renter_total_value: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
+        owner_total_value: {
+            type: DataTypes.FLOAT(7, 2),
+            defaultValue: 0,
+        },
     });
     Users.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
