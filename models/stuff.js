@@ -78,5 +78,23 @@ module.exports = function (sequelize, DataTypes) {
             });
         };
     });
+
+    Stuff.associate = function(models) {
+        Stuff.belongsTo(models.Users, {
+          foreignKey: {
+            name: "user_id",
+            allowNull: false
+          }
+        });
+      };
+      Stuff.associate = function(models) {
+        Stuff.belongsTo(models.Locations, {
+            foreignKey: {
+            name: "loc_id",
+            allowNull: false
+          }
+        });
+      };
+
     return Stuff;
 };
