@@ -39,10 +39,19 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
+
 var db = require("./models");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+
 
 // Middleware
 app.use(express.urlencoded({

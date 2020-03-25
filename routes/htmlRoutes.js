@@ -1,5 +1,11 @@
 var db = require("../models");
 const passport = require('passport');
+var express = require("express");
+
+var app = express();
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 module.exports = function (app) {
   // Load index page
@@ -24,14 +30,12 @@ module.exports = function (app) {
         data: dbStuff
       });
     });
-    // db.Stuff.findAll({}).then(function (dbStuff) {
-    //   console.log(dbStuff);
-    //   res.render("search", {
-    //     lat: req.body.lat,
-    //     lng: req.body.lng,
-    //     data: dbStuff
-    //   });
-    // });
+  });
+
+  app.get("/admin/stuff", function(req, res) {
+    // check if user is admin
+      res.render("stuff");
+      // else res.render("404");
   });
 
   app.get("/allrentals", function (req, res) {
@@ -66,6 +70,10 @@ module.exports = function (app) {
   app.get('/login',
     function (req, res) {
       res.render('login');
+    });
+    app.get('/signin',
+    function (req, res) {
+      res.redirect('/login/facebook');
     });
 
   app.get('/login/facebook',
