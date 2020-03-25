@@ -53,7 +53,7 @@
       $("#stuff > tbody").append(row);
 
       L.marker([e.Location.lat, e.Location.long]).addTo(map)
-        .bindPopup(e.description)
+        .bindPopup(`<a href="/stuff/${e.id}">${e.description}</a>`)
         .openPopup();
     });
   });

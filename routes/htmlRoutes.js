@@ -32,9 +32,30 @@ module.exports = function (app) {
     });
   });
 
+  app.get("/stuff/:id", function(req, res) {
+    db.Stuff.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [{
+        model: db.Users,
+        model: db.Locations
+      }]
+    }).then(function (dbStuff) {
+      console.log(dbStuff);
+      res.render("stuff", {
+        all: false,
+        id: req.params.id,
+        data: dbStuff
+      });
+    });
+  });
+
   app.get("/admin/stuff", function(req, res) {
     // check if user is admin
-      res.render("stuff");
+    res.render("stuff", {
+      all: true
+    });
       // else res.render("404");
   });
 
