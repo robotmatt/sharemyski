@@ -1,0 +1,49 @@
+<div id="container">
+    <h2>Users</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm" id="users">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Renter Rating</th>
+                    <th>Owner Rating</th>
+                </tr>
+            </thead>
+            <tbody id="stuff2">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="container">
+    <h2>Add Rentals</h2>
+    <form action="/api/users" method="POST">
+        <input type="text">
+        <input type="text">
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/users",
+            method: "GET"
+        }).then(function (response) {
+            
+            response.forEach(e => {
+                console.log(e);
+                let row = $("<tr>");
+                row.append($("<td>").text(e.id));
+                row.append($("<td>").text(e.name));
+                row.append($("<td>").text(e.phone));
+                row.append($("<td>").text(e.renter_rating_avg));
+                row.append($("<td>").text(e.owner_rating_avg));    
+                $("#users > tbody").append(row);
+            });
+        });
+    });
+</script>

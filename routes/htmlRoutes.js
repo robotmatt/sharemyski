@@ -38,6 +38,30 @@ module.exports = function (app) {
       // else res.render("404");
   });
 
+  app.get("/admin/users", function(req, res) {
+    // check if user is admin
+      res.render("users");
+      // else res.render("404");
+  });
+
+  app.get("/admin/transactions", function(req, res) {
+    // check if user is admin
+      res.render("transactions");
+      // else res.render("404");
+  });
+
+  app.get("/admin/locations", function(req, res) {
+    // check if user is admin
+      res.render("locations");
+      // else res.render("404");
+  });
+
+  app.get("/admin/categories", function(req, res) {
+    // check if user is admin
+      res.render("categories");
+      // else res.render("404");
+  });
+
   app.get("/allrentals", function (req, res) {
     // if users is admin
     db.Example.findAll({}).then(function (dbExamples) {

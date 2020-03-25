@@ -1,0 +1,51 @@
+<div id="container">
+    <h2>Locations</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm" id="locations">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody id="stuff2">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="container">
+    <h2>Add Rentals</h2>
+    <form action="/api/locations" method="POST">
+        <input type="text">
+        <input type="text">
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/locations",
+            method: "GET"
+        }).then(function (response) {
+            
+            response.forEach(e => {
+                console.log(e);
+                let row = $("<tr>");
+                row.append($("<td>").text(e.id));
+                row.append($("<td>").text(e.address1));
+                row.append($("<td>").text(e.city));
+                row.append($("<td>").text(e.state));
+                row.append($("<td>").text(e.lat));
+                row.append($("<td>").text(e.long));    
+                $("#locations > tbody").append(row);
+            });
+        });
+    });
+</script>
