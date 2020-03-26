@@ -7,7 +7,7 @@ module.exports = function (app) {
     let id = req.params.id;
     if (id) {
       db.Stuff.findOne({
-        id: id,
+        where: [{id: id}],
         include: [db.Location, db.User, db.Category]
       }).then(function (dbStuff) {
         res.json(dbStuff);
@@ -25,7 +25,7 @@ module.exports = function (app) {
     let id = req.params.id;
     if (id) {
       db.User.findOne({
-        id: id
+        where: [{id: id}]
       }).then(function (dbUser) {
         res.json(dbUser);
       });
@@ -41,7 +41,7 @@ module.exports = function (app) {
     let id = req.params.id;
     if (id) {
       db.Transaction.findOne({
-        id: id
+        where: [{id: id}]
       }).then(function (dbTransaction) {
         res.json(dbTransaction);
       });
@@ -56,7 +56,7 @@ module.exports = function (app) {
     let id = req.params.id;
     if (id) {
       db.Location.findOne({
-        id: id
+        where: [{id: id}]
       }).then(function (dbLocation) {
         res.json(dbLocation);
       });
@@ -71,7 +71,7 @@ module.exports = function (app) {
     let id = req.params.id;
     if (id) {
       db.Category.findOne({
-        id: id
+        where: [{id: id}]
       }).then(function (dbCategory) {
         res.json(dbCategory);
       });
