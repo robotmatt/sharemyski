@@ -13,10 +13,20 @@ module.exports = function (app) {
   });
   
   // Get all Stuff
-  app.get("/api/stuff", function (req, res) {
-    db.Stuff.findAll({}).then(function (dbStuff) {
-      res.json(dbStuff);
-    });
+  app.get("/api/stuff/:id?", function (req, res) {
+    let id = req.params.id;
+    if(id){
+      db.Stuff.findOne({
+        id: id
+      }).then(function (dbStuff) {
+        res.json(dbStuff);
+      });
+    }
+    else{
+      db.Stuff.findAll({}).then(function (dbStuff) {
+        res.json(dbStuff);
+      });
+    } 
   });
 
   app.get("/api/users", function(req, res) {
