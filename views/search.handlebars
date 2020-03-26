@@ -20,8 +20,8 @@
 <script>
 
   $(document).ready(function () {
-    let lat = {{lat}};
-    let lng = {{lng}};
+    let lat = `{{lat}}`;
+    let lng = `{{lng}}`;
     var map = L.map('map').setView([lat, lng ], 11);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -30,9 +30,10 @@
 
 var skiIcon = L.divIcon({html: '🎿', className: 'my-div-icon'});
 var boardIcon = L.divIcon({html: '🏂', className: 'my-div-icon'});
+let marker = null;
 
   $.ajax({
-    url: "/api/stuff_locations",
+    url: "/api/stuff",
     method: "GET"
   }).then(function (response) {
     response.forEach(e => {
@@ -43,9 +44,13 @@ var boardIcon = L.divIcon({html: '🏂', className: 'my-div-icon'});
       //row.append($("<td>").text(e.description));
       //  row.append($("<td>").append($("<button>").text("Rent! ")));
       //$("#stuff > tbody").append(row);
-      if(e.)
+      if(e.cat_name.includes("Board") || e.cat_name.includes("board")){
+        marker = boardIcon;
+      } else {
+        marker = skiIcon;
+      }
 
-      L.marker([e.Location.lat, e.Location.lng], {icon: myIcon}).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
+      L.marker([e.Location.lat, e.Location.lng], {icon: marker}).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
     });
   });
   });

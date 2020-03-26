@@ -79,21 +79,11 @@ module.exports = function (sequelize, DataTypes) {
         };
     });
 
-    Stuff.associate = function (models) {
-        Stuff.belongsTo(models.Users, {
-            foreignKey: {
-                name: "user_id",
-                allowNull: false
-            }
-        });
-    };
-    Stuff.associate = function (models) {
-        Stuff.belongsTo(models.Location, {
-            foreignKey: {
-                name: "loc_id",
-                allowNull: false
-            }
-        });
+    Stuff.associate = (models) => {
+        // associations can be defined here
+        Stuff.hasOne(models.User, { sourceKey: 'user_id', foreignKey: "id" });
+        Stuff.hasOne(models.Location, { sourceKey: "loc_id", foreignKey: 'id' });
+        Stuff.hasOne(models.Category, { sourceKey: 'cat_id', foreignKey: "id" });
     };
 
     return Stuff;

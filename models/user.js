@@ -118,6 +118,12 @@ module.exports = function (sequelize, DataTypes) {
             });
         };
     });
+ 
+    User.associate = (models) => {
+        // associations can be defined here
+        User.hasOne(models.Location, {sourceKey: 'loc_id', foreignKey: 'id' });
+    };
+
     return User;
 };
 
