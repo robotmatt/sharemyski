@@ -32,55 +32,51 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/stuff/:id", function(req, res) {
-    db.Stuff.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [{
-        model: db.Users,
-        model: db.Locations
-      }]
-    }).then(function (dbStuff) {
-      console.log(dbStuff);
+  app.get("/stuff/:id?", function (req, res) {
+    let id = req.params.id;
+    if (id) {
       res.render("stuff", {
         all: false,
-        id: req.params.id,
-        data: dbStuff
+        id: req.params.id
       });
-    });
+    } else {
+      res.render("stuff", {
+        all: true
+      });
+    }
+
   });
 
-  app.get("/admin/stuff", function(req, res) {
+  app.get("/admin/stuff", function (req, res) {
     // check if user is admin
     res.render("stuff", {
       all: true
     });
-      // else res.render("404");
+    // else res.render("404");
   });
 
-  app.get("/admin/users", function(req, res) {
+  app.get("/admin/users", function (req, res) {
     // check if user is admin
-      res.render("users");
-      // else res.render("404");
+    res.render("users");
+    // else res.render("404");
   });
 
-  app.get("/admin/transactions", function(req, res) {
+  app.get("/admin/transactions", function (req, res) {
     // check if user is admin
-      res.render("transactions");
-      // else res.render("404");
+    res.render("transactions");
+    // else res.render("404");
   });
 
-  app.get("/admin/locations", function(req, res) {
+  app.get("/admin/locations", function (req, res) {
     // check if user is admin
-      res.render("locations");
-      // else res.render("404");
+    res.render("locations");
+    // else res.render("404");
   });
 
-  app.get("/admin/categories", function(req, res) {
+  app.get("/admin/categories", function (req, res) {
     // check if user is admin
-      res.render("categories");
-      // else res.render("404");
+    res.render("categories");
+    // else res.render("404");
   });
 
   app.get("/allrentals", function (req, res) {
@@ -116,7 +112,7 @@ module.exports = function (app) {
     function (req, res) {
       res.render('login');
     });
-    app.get('/signin',
+  app.get('/signin',
     function (req, res) {
       res.redirect('/login/facebook');
     });
