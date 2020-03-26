@@ -1,6 +1,6 @@
-// USERS TABLE CONFIG AND SEEDING
+// USER TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
-    var Users = sequelize.define("Users", {
+    var User = sequelize.define("User", {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -62,9 +62,10 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 0,
         },
     });
-    Users.sync().then(() => {  // seeds DB if NODE_SEED = yes
+    User.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
-            Users.create({
+            console.log("**************** I'M HERE!")
+            User.create({
                 name: "Edward Bobby",
                 fb_id: "N/A",
                 admin: false,
@@ -81,7 +82,7 @@ module.exports = function (sequelize, DataTypes) {
                 renter_total_value: 225.54,
                 owner_total_value: 0,
             });
-            Users.create({
+            User.create({
                 name: "Bobby Edwards",
                 fb_id: "N/A",
                 admin: false,
@@ -98,7 +99,7 @@ module.exports = function (sequelize, DataTypes) {
                 renter_total_value: 225.54,
                 owner_total_value: 0,
             });
-            Users.create({
+            User.create({
                 name: "Bill Stephan",
                 fb_id: "10222313904457070",
                 admin: true,
@@ -117,7 +118,7 @@ module.exports = function (sequelize, DataTypes) {
             });
         };
     });
-    return Users;
+    return User;
 };
 
 

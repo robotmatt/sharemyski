@@ -1,6 +1,6 @@
-// CATEGORIES TABLE CONFIG AND SEEDING
+// Category TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
-    var Categories = sequelize.define("Categories", {
+    var Category = sequelize.define("Category", {
         description: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -9,24 +9,24 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
-    Categories.sync().then(() => {  // seeds DB if NODE_SEED = yes
+    Category.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
-            Categories.create({
+            Category.create({
                 description: "Skis - Downhill",
             });
-            Categories.create({
+            Category.create({
                 description: "Skis - Cross-Country",
             });
-            Categories.create({
+            Category.create({
                 description: "Snow Boards",
             });
-            Categories.create({
+            Category.create({
                 description: "Snow Shoes",
             });
-            Categories.create({
+            Category.create({
                 description: "Sleds / Toboggans",
             });
         };
     });
-    return Categories;
+    return Category;
 };
