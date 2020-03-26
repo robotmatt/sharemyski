@@ -59,27 +59,27 @@ module.exports = function (app) {
       // else res.render("404");
   });
 
-  app.get("/admin/users", function(req, res) {
+  app.get("/admin/user", function(req, res) {
     // check if user is admin
-      res.render("users");
+      res.render("user");
       // else res.render("404");
   });
 
-  app.get("/admin/transactions", function(req, res) {
+  app.get("/admin/transaction", function(req, res) {
     // check if user is admin
-      res.render("transactions");
+      res.render("transaction");
       // else res.render("404");
   });
 
-  app.get("/admin/locations", function(req, res) {
+  app.get("/admin/location", function(req, res) {
     // check if user is admin
-      res.render("locations");
+      res.render("location");
       // else res.render("404");
   });
 
-  app.get("/admin/categories", function(req, res) {
+  app.get("/admin/category", function(req, res) {
     // check if user is admin
-      res.render("categories");
+      res.render("category");
       // else res.render("404");
   });
 
