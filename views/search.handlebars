@@ -4,7 +4,11 @@
 <div id="container">
   <div id="map" style="height: 400px; "></div>
 </div>
-
+<style>
+  .my-div-icon{
+    font-size: 50px;
+  }
+</style>
 <div id="container">
  
 </div>
@@ -24,6 +28,9 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+var skiIcon = L.divIcon({html: '🎿', className: 'my-div-icon'});
+var boardIcon = L.divIcon({html: '🏂', className: 'my-div-icon'});
+
   $.ajax({
     url: "/api/stuff_locations",
     method: "GET"
@@ -36,8 +43,9 @@
       //row.append($("<td>").text(e.description));
       //  row.append($("<td>").append($("<button>").text("Rent! ")));
       //$("#stuff > tbody").append(row);
+      if(e.)
 
-      L.marker([e.Location.lat, e.Location.long]).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
+      L.marker([e.Location.lat, e.Location.lng], {icon: myIcon}).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
     });
   });
   });
