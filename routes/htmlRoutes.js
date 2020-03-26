@@ -19,8 +19,8 @@ module.exports = function (app) {
 
     db.Stuff.findAll({
       include: [{
-        model: db.Users,
-        model: db.Locations
+        model: db.User,
+        model: db.Location
       }]
     }).then(function (dbStuff) {
       console.log(dbStuff);
@@ -38,8 +38,8 @@ module.exports = function (app) {
         id: req.params.id
       },
       include: [{
-        model: db.Users,
-        model: db.Locations
+        model: db.User,
+        model: db.Location
       }]
     }).then(function (dbStuff) {
       console.log(dbStuff);

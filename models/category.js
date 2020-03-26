@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
-    Category.sync().then(() => {  // seeds DB if NODE_SEED = yes
+    Category.sync().then(() => { // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
             Category.create({
                 description: "Skis - Downhill",
@@ -28,5 +28,11 @@ module.exports = function (sequelize, DataTypes) {
             });
         };
     });
+
+    Category.associate = (models) => {
+        // associations can be defined here
+        Category.belongsTo(models.Stuff, { sourceKey: 'cat_id', foreignKey: 'id' });
+    };
+
     return Category;
 };

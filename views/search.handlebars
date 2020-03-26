@@ -4,26 +4,13 @@
 <div id="container">
   <div id="map" style="height: 400px; "></div>
 </div>
+<style>
+  .my-div-icon {
+    font-size: 50px;
+  }
+</style>
+<div id="stuffContainer">
 
-<div id="container">
-  <h2>Available Rentals</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm" id="stuff">
-
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Header</th>
-          <th>Header</th>
-          <th>Header</th>
-          <th>Header</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-  </div>
 </div>
 
 <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -32,30 +19,60 @@
   crossorigin=""></script>
 <script>
 
+  function renderStuff(stuff) {
+    let view = $("<div>").addClass("row no-gutters border rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative");
+    let textBox = $("<div>").addClass("col p-4 d-flex flex-column position-static");
+    textBox.append($("<h2>").text(stuff.description).addClass("mb-0"));
+    textBox.append($("<p>").text("Listed by " + stuff.User.name).addClass("card-text mb-auto"));
+    textBox.append($("<button>").text("Rent Now!").addClass("btn btn-primary"));
+    let pictureBox = $("<div>").addClass("col-auto d-none d-lg-block");
+    pictureBox.append($("<img>").attr({ "src": stuff.image }));
+    view.append(textBox);
+    view.append(pictureBox);
+    $("#stuffContainer").append(view);
+  }
+
   $(document).ready(function () {
-    var map = L.map('map').setView([{{ lat }}, {{ lng }} ], 12);
+    let lat = `{{lat}}`;
+    let lng = `{{lng}}`;
+    var map = L.map('map').setView([lat, lng], 11);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-  $.ajax({
-    url: "/api/stuff_locations",
-    method: "GET"
-  }).then(function (response) {
-    response.forEach(e => {
-      console.log(e);
-      let row = $("<tr>");
-      row.append($("<td>").text(e.id));
-      row.append($("<td>").text(e.cat_name));
-      row.append($("<td>").text(e.description));
-        row.append($("<td>").append($("<button>").text("Rent! ")));
-      $("#stuff > tbody").append(row);
+    var skiIcon = L.divIcon({ html: '🎿', className: 'my-div-icon' });
+    var boardIcon = L.divIcon({ html: '🏂', className: 'my-div-icon' });
+    let marker = null;
 
-      L.marker([e.Location.lat, e.Location.long]).addTo(map)
-        .bindPopup(`<a href="/stuff/${e.id}">${e.description}</a>`)
-        .openPopup();
+    $.ajax({
+      url: "/api/stuff",
+      method: "GET"
+    }).then(function (response) {
+      response.forEach(e => {
+        console.log(e);
+
+        if (e.cat_name.includes("Board") || e.cat_name.includes("board")) {
+          marker = boardIcon;
+        } else {
+          marker = skiIcon;
+        }
+
+        L.marker([e.Location.lat, e.Location.lng], { icon: marker }).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
+      });
     });
   });
+
+  $(document).on("click", ".popup", function (e) {
+    e.preventDefault();
+    let id = $(this).data("id");
+    $.ajax({
+      url: `/api/stuff/${id}`,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      $("#stuffContainer").empty();
+      renderStuff(response);
+    });
   });
 </script>
