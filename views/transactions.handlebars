@@ -1,0 +1,51 @@
+<div id="container">
+    <h2>Transactions</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm" id="transactions">
+            <thead>
+                <tr>
+                    <th>owner_id</th>
+                    <th>renter_id</th>
+                    <th>Insurance($)</th>
+                    <th>Daily Rate($)</th>
+                    <th>Days Rented</th>
+                    <th>Total($)</th>
+                </tr>
+            </thead>
+            <tbody id="stuff2">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="container">
+    <h2>Add Rentals</h2>
+    <form action="/api/transactions" method="POST">
+        <input type="text">
+        <input type="text">
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/transactions",
+            method: "GET"
+        }).then(function (response) {
+            
+            response.forEach(e => {
+                console.log(e);
+                let row = $("<tr>");
+                row.append($("<td>").text(e.owner_id));
+                row.append($("<td>").text(e.renter_id));
+                row.append($("<td>").text(e.insurance));
+                row.append($("<td>").text(e.daily_rate));
+                row.append($("<td>").text(e.days));
+                row.append($("<td>").text(e.total));    
+                $("#transactions > tbody").append(row);
+            });
+        });
+    });
+</script>
