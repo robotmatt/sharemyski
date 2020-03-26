@@ -2,10 +2,10 @@ var db = require("../models");
 
 module.exports = function (app) {
   // Get all Stuff with locations
-  app.get("/api/stuff_locations/", function (req, res) {
+  app.get("/api/stuff_location/", function (req, res) {
     db.Stuff.findAll({
       include: [{
-        model: db.Locations
+        model: db.Location
       }]
     }).then(function (dbStuff) {
       res.json(dbStuff);
@@ -29,28 +29,70 @@ module.exports = function (app) {
     } 
   });
 
-  app.get("/api/users", function(req, res) {
-    db.Users.findAll({}).then(function(dbUsers) {
-      res.json(dbUsers);
-    });
+  app.get("/api/user/:id?", function(req, res) {
+    let id = req.params.id;
+    if(id){
+      db.User.findOne({
+        id: id
+      }).then(function (dbUser) {
+        res.json(dbUser);
+      });
+    }
+    else{
+      db.User.findAll({}).then(function(dbUser) {
+        res.json(dbUser);
+      });
+    } 
+    
   });
 
-  app.get("/api/transactions", function(req, res) {
-    db.Transactions.findAll({}).then(function(dbTransactions) {
-      res.json(dbTransactions);
-    });
+  app.get("/api/transaction/:id?", function(req, res) {
+    let id = req.params.id;
+    if(id){
+      db.Transaction.findOne({
+        id: id
+      }).then(function (dbTransaction) {
+        res.json(dbTransaction);
+      });
+    }
+    else{
+      db.Transaction.findAll({}).then(function(dbTransaction) {
+        res.json(dbTransaction);
+      });
+    }});
+
+  app.get("/api/location/:id?", function(req, res) {
+    let id = req.params.id;
+    if(id){
+      db.Location.findOne({
+        id: id
+      }).then(function (dbLocation) {
+        res.json(dbLocation);
+      });
+    }
+    else{
+      db.Location.findAll({}).then(function (dbLocation) {
+        res.json(dbLocation);
+      });
+    } 
   });
 
-  app.get("/api/locations", function(req, res) {
-    db.Locations.findAll({}).then(function(dbLocations) {
-      res.json(dbLocations);
-    });
-  });
-
-  app.get("/api/categories", function(req, res) {
-    db.Categories.findAll({}).then(function(dbCategories) {
-      res.json(dbCategories);
-    });
+  app.get("/api/category/:id?", function(req, res) {
+    let id = req.params.id;
+    if(id){
+      db.Category.findOne({
+        id: id
+      }).then(function (dbCategory) {
+        res.json(dbCategory);
+      });
+    }
+    else{
+      db.Category.findAll({}).then(function(dbCategory) {
+        res.json(dbCategory);
+      });
+    } 
+    
+   
   });
 
   // Create a new example
