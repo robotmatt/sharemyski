@@ -40,8 +40,8 @@ module.exports = function (sequelize, DataTypes) {
                 state: "Texas",
                 code: "78702",
                 Country: "USA",
-                long: 97.7431,
-                lat: 30.2672,
+                long: "97.7431",
+                lat: "30.2672",
             });
             Locations.create({
                 address1: "777 W 6th Street",
@@ -50,8 +50,8 @@ module.exports = function (sequelize, DataTypes) {
                 state: "Texas",
                 code: "78702",
                 Country: "USA",
-                long: 97.7431,
-                lat: 30.2672,
+                long: "-97.7431",
+                lat: "30.2672",
             });
             Locations.create({
                 address1: "9842 Spicewood Mesa",
@@ -60,8 +60,8 @@ module.exports = function (sequelize, DataTypes) {
                 state: "Texas",
                 code: "78759",
                 Country: "USA",
-                long: 97.7431,
-                lat: 30.2672,
+                long: "-97.7431",
+                lat: "30.2672",
             });
         };
     });
