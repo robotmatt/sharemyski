@@ -1,6 +1,6 @@
-// LOCATIONS TABLE CONFIG AND SEEDING
+// LOCATION TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
-    var Locations = sequelize.define("Locations", {
+    var Location = sequelize.define("Location", {
         address1: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -24,46 +24,46 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             defaultValue: "USA",
         },
-        long: {
+        lng: {
             type: DataTypes.DOUBLE,
         },
         lat: {
             type: DataTypes.DOUBLE,
         }
     });
-    Locations.sync().then(() => {  // seeds DB if NODE_SEED = yes
+    Location.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
-            Locations.create({
+            Location.create({
                 address1: "222 E 6th Street",
                 address2: "",
                 city: "Austin",
                 state: "Texas",
                 code: "78702",
                 Country: "USA",
-                long: "97.7431",
-                lat: "30.2672",
+                lng: -97.740440,
+                lat: 30.267680,
             });
-            Locations.create({
+            Location.create({
                 address1: "777 W 6th Street",
                 address2: "",
                 city: "Austin",
                 state: "Texas",
                 code: "78702",
                 Country: "USA",
-                long: "-97.7431",
-                lat: "30.2672",
+                lng: -97.749730,
+                lat: 30.270050,
             });
-            Locations.create({
+            Location.create({
                 address1: "9842 Spicewood Mesa",
                 address2: "",
                 city: "Austin",
                 state: "Texas",
                 code: "78759",
                 Country: "USA",
-                long: "-97.7431",
-                lat: "30.2672",
+                lng: -97.791230,
+                lat: 30.414420,
             });
         };
     });
-    return Locations;
+    return Location;
 };
