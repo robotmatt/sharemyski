@@ -1,19 +1,19 @@
 // TRANSACTION  TABLE CONFIG AND SEEDING
 module.exports = function (sequelize, DataTypes) {
     var Transaction = sequelize.define("Transaction", {
-        owner_id: {
+        OwnerId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        renter_id: {
+        RenterId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        stuff_id: {
+        StuffId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        loc_id: {
+        LocationId: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -53,10 +53,10 @@ module.exports = function (sequelize, DataTypes) {
     Transaction.sync().then(() => {  // seeds DB if NODE_SEED = yes
         if (process.env.NODE_SEED === "yes") {
             Transaction.create({
-                owner_id: 1,
-                renter_id: 2,
-                stuff_id: 1,
-                loc_id: 1,
+                OwnerId: 1,
+                RenterId: 2,
+                StuffId: 1,
+                LocationId: 1,
                 start: 0,
                 stop: 0,
                 days: 2,
@@ -67,10 +67,10 @@ module.exports = function (sequelize, DataTypes) {
                 owner_rating: 1,
             });
             Transaction.create({
-                owner_id: 1,
-                renter_id: 2,
-                stuff_id: 2,
-                loc_id: 1,
+                OwnerId: 1,
+                RenterId: 2,
+                StuffId: 2,
+                LocationId: 1,
                 start: 0,
                 stop: 0,
                 days: 2,

@@ -68,7 +68,8 @@ module.exports = function (sequelize, DataTypes) {
 
     Location.associate = (models) => {
         // associations can be defined here
-        Location.belongsTo(models.User, { sourceKey: 'loc_id', foreignKey: 'id' });
+        Location.hasMany(models.Stuff);
+        Location.hasMany(models.User);
     };
     
     return Location;

@@ -5,7 +5,6 @@ const fs = require('fs')
 const morgan = require('morgan')
 const path = require('path')
 
-
 const express = require("express");
 const exphbs = require("express-handlebars");
 
@@ -13,12 +12,20 @@ const db = require("./models");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), { flags: 'a' })
+
+const passport = require('passport');
+require('./config/passport')(passport);
+app.use(passport.initialize());
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), {
+  flags: 'a'
+})
 
 // Middleware
 
-app.use(morgan('combined', { stream: accessLogStream })) // logging
-
+app.use(morgan('combined', {
+  stream: accessLogStream
+})) // logging
 
 app.use(express.urlencoded({
   extended: false

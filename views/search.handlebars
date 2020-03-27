@@ -1,6 +1,39 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin="" />
+<div class="mr-5 ml-5 mb-2">
+  <form id="searchForm" class="needs-validation" novalidate="" action="search" method="POST">
+    <div class="row">
+      <div class="col-2-sm">
+        <label for="location">Location</label>
+        <input type="search" class="form-control" id="location" placeholder="" value="" required="">
+        <div class="invalid-feedback">
+          Valid Location is required.
+        </div>
+      </div>
+      <div class="col-2-sm mb-3">
+        <label for="startDate">Start</label>
+        <input type="date" class="form-control date" id="startDate" placeholder="" value='{{startDate}}' required="">
+        <div class="invalid-feedback">
+          Valid start date is required.
+        </div>
+      </div>
+      <div class="col-2-sm mb-3">
+        <label for="endDate">End</label>
+        <input type="date" class="form-control date" id="endDate" placeholder="" value="{{endDate}}" required="">
+        <div class="invalid-feedback">
+          Valid end date is required.
+        </div>
+      </div>
+
+      <div class="col-1-sm">
+        <button class="btn btn-primary btn-block" type="submit" id="button-search">Search for gear!</button>
+        </div>
+
+    </div>
+  </form>
+</div>
+
 <div id="container">
   <div id="map" style="height: 400px; "></div>
 </div>
@@ -24,7 +57,7 @@
     let textBox = $("<div>").addClass("col p-4 d-flex flex-column position-static");
     textBox.append($("<h2>").text(stuff.description).addClass("mb-0"));
     textBox.append($("<p>").text("Listed by " + stuff.User.name).addClass("card-text mb-auto"));
-    textBox.append($("<button>").text("Rent Now!").addClass("btn btn-primary"));
+    textBox.append($("<a>").text("Rent Now!").addClass("btn btn-primary").attr("href", `/rent/${stuff.id}`));
     let pictureBox = $("<div>").addClass("col-auto d-none d-lg-block");
     pictureBox.append($("<img>").attr({ "src": stuff.image }));
     view.append(textBox);

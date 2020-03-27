@@ -11,6 +11,9 @@ module.exports = function (sequelize, DataTypes) {
         fb_id: {
             type: DataTypes.STRING,
         },
+        token: {
+            type: DataTypes.STRING,
+        },
         admin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -27,9 +30,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
-        loc_id: {
+        LocationId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING,
@@ -72,7 +75,7 @@ module.exports = function (sequelize, DataTypes) {
                 active: true,
                 rents: true,
                 owns: true,
-                loc_id: 1,
+                LocationId: 1,
                 email: "edward@gmail.net",
                 phone: "512-799-5555",
                 renter_rating_avg: 1.5,
@@ -89,7 +92,7 @@ module.exports = function (sequelize, DataTypes) {
                 active: true,
                 rents: true,
                 owns: false,
-                loc_id: 2,
+                LocationId: 2,
                 email: "bobby@gmail.net",
                 phone: "512-997-5555",
                 renter_rating_avg: 2.1,
@@ -106,7 +109,7 @@ module.exports = function (sequelize, DataTypes) {
                 active: true,
                 rents: true,
                 owns: true,
-                loc_id: 3,
+                LocationId: 3,
                 email: "me@billstephan.com",
                 phone: "512-997-8948",
                 renter_rating_avg: 0.3,
@@ -121,7 +124,9 @@ module.exports = function (sequelize, DataTypes) {
  
     User.associate = (models) => {
         // associations can be defined here
-        User.hasOne(models.Location, {sourceKey: 'loc_id', foreignKey: 'id' });
+        User.hasMany(models.Stuff);
+        User.belongsTo(models.Location);
+        User.belongsToMany(models.Stuff, { through: "Transactions" });
     };
 
     return User;
