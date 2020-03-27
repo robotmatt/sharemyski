@@ -18,9 +18,14 @@ module.exports = function (passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
-            done(err, user);
-        });
+        // User.findById(id, function (err, user) {
+        //     done(err, user);
+        // });
+        db.User.findOne({
+            where: [{id: id}]
+          }).then(function (dbUser) {
+            done(err, dbUser);
+          });
     });
 
     // code for login (use('local-login', new LocalStategy))
