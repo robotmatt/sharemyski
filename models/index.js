@@ -59,6 +59,7 @@ function seedCategory() {
 function seedUser() {
   db.User.create({
     name: "Edward Bobby",
+    password: "$2a$10$tTYzzvENcuoWmAc3BMWgce4g4ju1TU6rHSRhnnv.0a6kl9azHxLq.",
     fbId: "N/A",
     fbToken: "",
     address: "222 E 6th Street",
@@ -79,6 +80,7 @@ function seedUser() {
   });
   db.User.create({
     name: "Bobby Edwards",
+    password: "$2a$10$tTYzzvENcuoWmAc3BMWgce4g4ju1TU6rHSRhnnv.0a6kl9azHxLq.",
     fbId: "N/A",
     fbToken: "",
     address: "777 W 6th Street",
@@ -99,6 +101,7 @@ function seedUser() {
   });
   db.User.create({
     name: "Bill Stephan",
+    password: "$2a$10$tTYzzvENcuoWmAc3BMWgce4g4ju1TU6rHSRhnnv.0a6kl9azHxLq.",
     fbId: "10222313904457070",
     fbToken: "",
     address: "9904 Spicewood Mesa",
