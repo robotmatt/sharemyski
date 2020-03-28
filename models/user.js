@@ -4,6 +4,9 @@ var bcrypt = require("bcryptjs");
 // USER TABLE CONFIG
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
+        name: {
+            type: DataTypes.STRING
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -22,33 +25,26 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         fbToken: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         address: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         city: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         state: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         zip: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         country: {
             type: DataTypes.STRING,
             defaultValue: "USA",
         },
-        email: {
-            type: DataTypes.STRING,
-        },
         phone: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         xOwner: {
             type: DataTypes.INTEGER,
@@ -83,7 +79,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
         },
     });
-    
+
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
