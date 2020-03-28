@@ -125,8 +125,8 @@ function seedUser() {
 // SEED ITEM TABLE MODEL FUNCTION **********
 function seedItem() {
   db.Item.create({
-    userId: 1,
-    catId: 1,
+    UserId: 1,
+    CategoryId: 1,
     inUse: false,
     start: 0,
     end: 0,
@@ -136,8 +136,8 @@ function seedItem() {
     state: "Texas",
     zip: "78759",
     Country: "USA",
-    lng: 0,
-    lat: 0,
+    lat: "30.4156427",
+    lng: "-97.7903354",
     dayCost: 40,
     xRented: 0,
     equipRating: 4.5,
@@ -145,8 +145,8 @@ function seedItem() {
     image: "https://www.rei.com/media/ca768040-865e-42ad-88ca-0c60ffacd2c4?size=784x588",
   });
   db.Item.create({
-    userId: 1,
-    catId: 1,
+    UserId: 1,
+    CategoryId: 1,
     inUse: false,
     start: 0,
     end: 0,
@@ -156,6 +156,8 @@ function seedItem() {
     state: "Texas",
     zip: "78702",
     Country: "USA",
+    lat: "30.2701387",
+    lng: "-97.7506732",
     dayCost: 20,
     xRented: 0,
     equipRating: 3.5,
@@ -163,8 +165,8 @@ function seedItem() {
     image: "https://curated-uploads.imgix.net/AgAAAB0A5-9lHGDdMwykPMvyzf5RUA.jpg?auto=compress%2Cformat&q=75&fit=crop&ch=Width%2CDPR%2CSave-Data&ixlib=react-8.6.1&w=500&dpr=1"
   });
   db.Item.create({
-    userId: 3,
-    catId: 5,
+    UserId: 3,
+    CategoryId: 5,
     inUse: false,
     start: 0,
     end: 0,
@@ -174,6 +176,8 @@ function seedItem() {
     state: "Texas",
     zip: "78702",
     Country: "USA",
+    lat: "30.2674923",
+    lng: "-97.7406062",
     dayCost: 40,
     xRented: 0,
     equipRating: 2.5,
