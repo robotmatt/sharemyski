@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="/styles/bootstrap.min.css">
   <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
-  <title></title>
+  <title>{{title}}</title>
 </head>
 
 <script src="/js/jquery-3.4.1.min.js"></script>
@@ -13,14 +13,20 @@
 
 <body>
 
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-dark" href="/">sharemyski</a></h5>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-light" href="/">sharemyski</a></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="/about">How We Work</a>
-      <a class="p-2 text-dark" href="/signin">Sign In</a>
-      <a class="p-2 text-dark" href="/signup">Sign Up</a>
+      <a class="p-2 text-light" href="/about">How We Work</a>
+      {{#unless loggedIn}}
+      <a class="p-2 text-light" href="/signup">Sign Up</a>
     </nav>
-    <a class="btn btn-outline-primary" href="/list">List</a>
+    <a class="btn btn-outline-primary" href="/login">Sign In</a>
+    {{/unless}}
+    {{#if loggedIn}}
+    <a class="p-2 text-light" href="/profile">{{user.email}}</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="/logout">Sign Out</a>
+    {{/if}}
   </div>
   {{{body}}}
 </body>
