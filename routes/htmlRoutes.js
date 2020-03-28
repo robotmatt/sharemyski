@@ -26,8 +26,7 @@ module.exports = function (app, passport) {
   app.post("/search", function (req, res) {
     db.Item.findAll({
       include: [{
-        model: db.User,
-        model: db.Location
+        model: db.User
       }]
     }).then(function (dbStuff) {
       console.log(dbStuff);

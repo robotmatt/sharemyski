@@ -1,12 +1,12 @@
-function renderStuff(stuff) {
+function renderStuff(item) {
     let view = $("<div>").addClass("row no-gutters border rounded overflow-hidden flex-md-row m-5 shadow-sm h-md-250 position-relative");
     let textBox = $("<div>").addClass("col p-4 d-flex flex-column position-static");
-    textBox.append($("<h2>").text(stuff.description).addClass("mb-0"));
-    textBox.append($("<p>").text("Listed by " + stuff.User.name).addClass("card-text mb-auto"));
+    textBox.append($("<h2>").text(item.description).addClass("mb-0"));
+    textBox.append($("<p>").text("Listed by " + item.User.name).addClass("card-text mb-auto"));
     textBox.append($("<button>").text("Rent Now!").addClass("btn btn-primary"));
     let pictureBox = $("<div>").addClass("col-auto d-none d-lg-block");
     pictureBox.append($("<img>").attr({
-        "src": stuff.image
+        "src": item.image
     }));
     view.append(textBox);
     view.append(pictureBox);
@@ -32,21 +32,21 @@ $(document).ready(function () {
     let marker = null;
 
     $.ajax({
-        url: "/api/stuff",
+        url: "/api/item",
         method: "GET"
     }).then(function (response) {
         response.forEach(e => {
             console.log(e);
 
-            if (e.cat_name.includes("Board") || e.cat_name.includes("board")) {
+            if (e.Category.description.includes("Board") || e.Category.description.includes("board")) {
                 marker = boardIcon;
             } else {
                 marker = skiIcon;
             }
 
-            L.marker([e.Location.lat, e.Location.lng], {
+            L.marker([e.lat, e.lng], {
                 icon: marker
-            }).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/stuff/${e.id}">${e.description}</a>`);
+            }).addTo(map).bindPopup(`<a class="popup" data-id="${e.id}" href="/item/${e.id}">${e.description}</a>`);
         });
     });
 });
@@ -55,7 +55,7 @@ $(document).on("click", ".popup", function (e) {
     e.preventDefault();
     let id = $(this).data("id");
     $.ajax({
-        url: `/api/stuff/${id}`,
+        url: `/api/item/${id}`,
         method: "GET"
     }).then(function (response) {
         console.log(response);
