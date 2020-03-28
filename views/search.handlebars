@@ -1,61 +1,28 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin="" />
-<div id="container">
+  <div class="row d-flex justify-content-center mb-4">
+      <div class="col-md-10 ">
   <div id="map" style="height: 400px; "></div>
 </div>
+</div>
+<style>
+  .my-div-icon {
+    font-size: 50px;
+  }
+</style>
+<div class="row d-flex justify-content-center">
+      <div class="col-md-10 " id="stuffContainer">
+</div >
 
-<div id="container">
-  <h2>Available Rentals</h2>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm" id="stuff">
-
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Header</th>
-          <th>Header</th>
-          <th>Header</th>
-          <th>Header</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      </tbody>
-    </table>
-  </div>
 </div>
 
 <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
   crossorigin=""></script>
-<script>
-
-  $(document).ready(function () {
-    var map = L.map('map').setView([{{ lat }}, {{ lng }} ], 12);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-
-  $.ajax({
-    url: "/api/stuff_locations",
-    method: "GET"
-  }).then(function (response) {
-    response.forEach(e => {
-      console.log(e);
-      let row = $("<tr>");
-      row.append($("<td>").text(e.id));
-      row.append($("<td>").text(e.cat_name));
-      row.append($("<td>").text(e.description));
-        row.append($("<td>").append($("<button>").text("Rent! ")));
-      $("#stuff > tbody").append(row);
-
-      L.marker([e.Location.lat, e.Location.long]).addTo(map)
-        .bindPopup(`<a href="/stuff/${e.id}">${e.description}</a>`)
-        .openPopup();
-    });
-  });
-  });
-</script>
+  <script>
+    let lat = `{{lat}}`;
+    let lng = `{{lng}}`;
+  </script>
+<script src="/js/search.js"></script>
