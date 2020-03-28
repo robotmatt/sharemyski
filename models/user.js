@@ -18,6 +18,7 @@ module.exports = function (sequelize, DataTypes) {
         // The password cannot be null
         password: {
             type: DataTypes.STRING,
+            defaultValue: "N/A",
             allowNull: false
         },
         fb_id: {
