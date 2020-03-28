@@ -24,7 +24,7 @@ module.exports = function (app, passport) {
 
   // Load search page
   app.post("/search", function (req, res) {
-    db.Stuff.findAll({
+    db.Item.findAll({
       include: [{
         model: db.User,
         model: db.Location
@@ -54,7 +54,7 @@ module.exports = function (app, passport) {
   });
 
   app.get("/stuff/:id", function (req, res) {
-    db.Stuff.findOne({
+    db.Item.findOne({
       where: {
         id: req.params.id
       },
@@ -120,18 +120,22 @@ module.exports = function (app, passport) {
     });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function (req, res) {
-    db.Example.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (dbExample) {
-      res.render("example", {
-        example: dbExample
+  app.get("/about", function (req, res) {
+    if (req.user) {
+      console.log(req.user);
+      res.render("about", {
+        title: "sharemyski - the best place to find gear",
+        loggedIn: true,
+        user: req.user
       });
-    });
+    } else {
+      res.render("about", {
+        title: "sharemyski - the best place to find gear",
+        loggedIn: false
+      });
+    }
   });
+
 
   // Authentication Routes
   app.get("/signup", function (req, res) {

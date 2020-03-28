@@ -22,33 +22,29 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         fbToken: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         address: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         city: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         state: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         zip: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            type: DataTypes.STRING
         },
         country: {
             type: DataTypes.STRING,
             defaultValue: "USA",
         },
         email: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         phone: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING
         },
         xOwner: {
             type: DataTypes.INTEGER,
