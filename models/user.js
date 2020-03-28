@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         // The password cannot be null
         password: {
             type: DataTypes.STRING,
+            defaultValue: "N/A",
             allowNull: false
         },
         fb_id: {
@@ -83,7 +84,7 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: false,
         },
     });
-    
+
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
