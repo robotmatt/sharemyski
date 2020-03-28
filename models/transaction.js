@@ -22,8 +22,8 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 0,
         },
     });
-    Transaction.associate = (models) => { // associations can be defined here
-        Transaction.belongsTo(models.Item)
-    };
+    // Transaction.associate = (models) => { // associations can be defined here
+    //     Transaction.belongsTo(models.Item)
+    // };
     return Transaction;
 };
