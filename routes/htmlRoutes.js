@@ -1,22 +1,29 @@
-var db = require("../models");
-const passport = require('passport');
-var express = require("express");
+let db = require("../models");
+let path = require("path");
 
-var app = express();
+// Requiring our custom middleware for checking if a user is logged in
+let isAuthenticated = require("../config/middleware/isAuthenticated");
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-module.exports = function (app) {
+module.exports = function (app, passport) {
   // Load index page
   app.get("/", function (req, res) {
-    res.render("index", {
-      msg: "Welcome!"
-    });
+    if (req.user) {
+      console.log(req.user);
+      res.render("index", {
+        title: "sharemyski - the best place to find gear",
+        loggedIn: true,
+        user: req.user
+      });
+    } else {
+      res.render("index", {
+        title: "sharemyski - the best place to find gear",
+        loggedIn: false
+      });
+    }
   });
+
   // Load search page
   app.post("/search", function (req, res) {
-
     db.Stuff.findAll({
       include: [{
         model: db.User,
@@ -24,15 +31,29 @@ module.exports = function (app) {
       }]
     }).then(function (dbStuff) {
       console.log(dbStuff);
-      res.render("search", {
-        lat: req.body.lat,
-        lng: req.body.lng,
-        data: dbStuff
-      });
+      if (req.user) {
+        console.log(req.user);
+        res.render("search", {
+          lat: req.body.lat,
+          lng: req.body.lng,
+          data: dbStuff,
+          title: "sharemyski - the best place to find gear",
+          loggedIn: true,
+          user: req.user
+        });
+      } else {
+        res.render("search", {
+          lat: req.body.lat,
+          lng: req.body.lng,
+          data: dbStuff,
+          title: "sharemyski - the best place to find gear",
+          loggedIn: false
+        });
+      }
     });
   });
 
-  app.get("/stuff/:id", function(req, res) {
+  app.get("/stuff/:id", function (req, res) {
     db.Stuff.findOne({
       where: {
         id: req.params.id
@@ -51,36 +72,36 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/admin/stuff", function(req, res) {
+  app.get("/admin/stuff", function (req, res) {
     // check if user is admin
     res.render("stuff", {
       all: true
     });
-      // else res.render("404");
+    // else res.render("404");
   });
 
-  app.get("/admin/user", function(req, res) {
+  app.get("/admin/user", function (req, res) {
     // check if user is admin
-      res.render("user");
-      // else res.render("404");
+    res.render("user");
+    // else res.render("404");
   });
 
-  app.get("/admin/transaction", function(req, res) {
+  app.get("/admin/transaction", function (req, res) {
     // check if user is admin
-      res.render("transaction");
-      // else res.render("404");
+    res.render("transaction");
+    // else res.render("404");
   });
 
-  app.get("/admin/location", function(req, res) {
+  app.get("/admin/location", function (req, res) {
     // check if user is admin
-      res.render("location");
-      // else res.render("404");
+    res.render("location");
+    // else res.render("404");
   });
 
-  app.get("/admin/category", function(req, res) {
+  app.get("/admin/category", function (req, res) {
     // check if user is admin
-      res.render("category");
-      // else res.render("404");
+    res.render("category");
+    // else res.render("404");
   });
 
   app.get("/allrentals", function (req, res) {
@@ -112,37 +133,77 @@ module.exports = function (app) {
     });
   });
 
-  app.get('/login',
-    function (req, res) {
-      res.render('login');
+  // Authentication Routes
+  app.get("/signup", function (req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/members");
+    }
+    res.render("auth/signup", {
+      title: "sharemyski Signup"
     });
-    app.get('/signin',
-    function (req, res) {
-      res.redirect('/login/facebook');
+  });
+  app.get("/login", function (req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      res.redirect("/");
+    }
+    //res.sendFile(path.join(__dirname, "../public/login.html"));
+    res.render("auth/login", {
+      title: "sharemyski Login"
     });
+  });
 
-  app.get('/login/facebook',
-    passport.authenticate('facebook'));
+  // Here we've add our isAuthenticated middleware to this route.
+  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+  app.get("/members", isAuthenticated, function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/members.html"));
+  });
 
-  app.get('/return',
+  // =====================================
+  // FACEBOOK ROUTES =====================
+  // =====================================
+  // route for facebook authentication and login
+  app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['public_profile', 'email']
+  }));
+
+  // handle the callback after facebook has authenticated the user
+  app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      failureRedirect: '/login'
-    }),
-    function (req, res) {
-      res.redirect('/');
-    });
+      successRedirect: '/',
+      failureRedirect: '/failedAuth'
+    }));
 
-  app.get('/profile',
-    require('connect-ensure-login').ensureLoggedIn(),
-    function (req, res) {
-      console.log(picture)
-      res.render('profile', {
-        user: req.user
-      });
+  // route for a failed facebook authentication out
+  app.get('/failedAuth', function (req, res) {
+    console.log("Failed Facebook Auth " + req);
+    req.logout();
+    res.render("auth/failedAuth", {
+      title: "sharemyski Failed Facebook Authentication"
     });
+  });
+
+  // route for logging out
+  app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
   // Render 404 page for any unmatched routes
   app.get("*", function (req, res) {
-    res.render("404");
+    if (req.user) {
+      console.log(req.user);
+      res.render("404", {
+        title: "sharemyski - page not found",
+        loggedIn: true,
+        user: req.user
+      });
+    } else {
+      res.render("404", {
+        title: "sharemyski - page not found",
+        loggedIn: false
+      });
+    }
   });
 };

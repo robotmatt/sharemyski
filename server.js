@@ -1,30 +1,36 @@
+// Require dotenv for environment variables
 require("dotenv").config();
 
+//requires for app
+let fs = require('fs');
+let morgan = require('morgan');
+let path = require('path');
 
-const fs = require('fs')
-const morgan = require('morgan')
-const path = require('path')
+let express = require("express");
+let exphbs = require("express-handlebars");
+let session = require("express-session")
+let bodyParser = require("body-parser");
 
+let passport = require('passport');
+let passportfb = require('passport-facebook');
+let passportloc = require('passport-local');
 
-const express = require("express");
-const exphbs = require("express-handlebars");
+let db = require("./models");
+let app = express();
+let PORT = process.env.PORT || 3000;
 
-const db = require("./models");
-const app = express();
-const PORT = process.env.PORT || 3000;
+// HTTP request logging
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), { flags: 'a' });
+app.use(morgan('combined', { stream: accessLogStream }));  
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log/access.log'), { flags: 'a' })
-
-// Middleware
-
-app.use(morgan('combined', { stream: accessLogStream })) // logging
-
-
-app.use(express.urlencoded({
-  extended: false
-}));
+// Middleware for Facebook Auth
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+// We need to use sessions to keep track of our user's login status
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Handlebars
 app.engine(
@@ -35,14 +41,11 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-
 // Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app, passport);
+require("./routes/htmlRoutes")(app, passport);
 
-var syncOptions = {
-  force: false
-};
+let syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
