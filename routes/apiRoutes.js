@@ -3,20 +3,22 @@ let passport = require("../config/passport");
 
 module.exports = function (app) {
 
-  // API to get Item
+  // API to get Stuff
   app.get("/api/item/:id?", function (req, res) {
     let id = req.params.id;
     if (id) {
       db.Item.findOne({
-        where: [{ id: id }],
+        where: [{id: id}],
         include: [db.User, db.Category]
       }).then(function (dbItem) {
+        console.log(dbItem);
         res.json(dbItem);
       });
     } else {
       db.Item.findAll({
         include: [db.User, db.Category]
       }).then(function (dbItem) {
+        console.log(dbItem);
         res.json(dbItem);
       });
     }

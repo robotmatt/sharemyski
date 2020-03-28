@@ -67,9 +67,11 @@ module.exports = function (sequelize, DataTypes) {
             defaultValue: 0,
         }
     });
+
     Item.associate = (models) => { // associations can be defined here
         Item.belongsTo(models.User)
         Item.belongsTo(models.Category)
     };
+    
     return Item;
 };
